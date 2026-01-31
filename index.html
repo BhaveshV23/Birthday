@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday 🎂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+
+    body {
+      background: #0f0c29;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    section.active { display: flex; animation: fadeIn 0.8s ease-in; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    h1 { font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+    p { font-size: 1.2rem; max-width: 600px; line-height: 1.6; margin-bottom: 25px; font-weight: 300; }
+
+    button {
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      background: #00d2ff;
+      background: linear-gradient(to right, #3a7bd5, #00d2ff);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+      transition: 0.3s;
+    }
+
+    button:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6); }
+
+    #letter { 
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      white-space: pre-line; 
+      text-align: left;
+      min-height: 200px;
+    }
+
+    .heart-bg { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 0; }
+    canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2; }
+
+    /* The Scooter Animation */
+    .scooter-path {
+        width: 100%;
+        height: 50px;
+        position: relative;
+        overflow: hidden;
+        margin-top: 20px;
+        border-bottom: 2px dashed rgba(255,255,255,0.3); /* The Road */
+    }
+
+    .scooter {
+        font-size: 30px;
+        position: absolute;
+        left: -50px;
+        bottom: 5px;
+    }
+
+    /* This class triggers the drive */
+    .drive-active {
+        animation: driveAcross 4s linear infinite;
+    }
+
+    @keyframes driveAcross {
+        0% { left: -50px; transform: scaleX(1); }
+        100% { left: 100%; transform: scaleX(1); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <canvas id="confetti"></canvas>
+
+  <section class="active" id="page1">
+    <h1>⚠️ SYSTEM ALERT ⚠️</h1>
+    <p>
+      An unauthorized "Legend" has been detected in the system.<br>
+      Proceeding may cause <strong>major nostalgia</strong> and <strong>eye-sweating</strong> (not crying).
+    </p>
+    <button onclick="nextPage(2)">Bypass Security 😎</button>
+  </section>
+
+  <section id="page2">
+    <h1>🛠️ BUG REPORT</h1>
+    <p>
+      <strong>Issue:</strong> User is getting older.<br>
+      <strong>Status:</strong> Not a bug, it's a feature.<br><br>
+      ✅ Memory: Full of stupid jokes<br>
+      ✅ Intelligence: 404 Not Found<br>
+      ✅ <strong>Scanning Skills:</strong> High-speed tracking of girls on campus 🕵️‍♂️<br>
+      ✅ Handsomeness: Successfully Compiled
+    </p>
+    <button onclick="nextPage(3)">Ignore & Continue 😌</button>
+  </section>
+
+  <section id="page3">
+    <h1>🎉 HAPPY BIRTHDAY!</h1>
+    <p>
+      Happy Birthday, Siddhant!<br>
+      You’ve survived 365 days of my nonsense. <br>
+      That's a bigger achievement than any engineering degree.
+    </p>
+    <button onclick="startConfetti(); nextPage(4)">Click for Magic ✨</button>
+  </section>
+
+  <section id="page4">
+    <h1>🫂 Real Talk</h1>
+    <p>
+    From campus walks full of “interesting distractions” 👩✨ to all of us squeezing onto  
+  your poor Activa...
+  </p>
+  
+  <div class="scooter-path">
+    <div id="activa" class="scooter">🛵 <span style="font-size: 12px; position:absolute; top:-10px; left:5px;">👦👦👦</span></div>
+  </div>
+
+  <p style="margin-top: 20px;">
+    Honestly, I don't know what’s stronger: Our friendship or 
+    your scooter's suspension! 🛵💨
+  </p>
+    <p>
+      They say "Friends are the family we choose."<br>
+      I think I just chose a very expensive, very loud, <br>
+      and very loyal brother.
+    </p>
+    <button onclick="nextPage(5); startTyping();">A Letter for You ❤️</button>
+  </section>
+
+  <section id="page5">
+    <h1>💌 To My Brother</h1>
+    <p id="letter"></p>
+    <button id="finalBtn" onclick="nextPage(6)" style="display:none;">One last thing... 🎁</button>
+  </section>
+
+  <section id="page6">
+    <h1 style="font-size: 5rem;">❤️</h1>
+    <p>
+      No matter where our careers or lives take us,<br>
+      even if we're in different cities or debugging different codes...
+    </p>
+    <h2 style="color: #ffcc70;">I've always got your back.</h2>
+    <p style="margin-top:20px;">
+      Stay the same idiot you are.<br>
+      Happy Birthday, Siddhant.
+    </p>
+  </section>
+
+  <script>
+    const pages = document.querySelectorAll("section");
+    const music = document.getElementById("bgMusic");
+    let musicStarted = false;
+
+    function nextPage(num) {
+      pages.forEach(p => p.classList.remove("active"));
+  document.getElementById("page" + num).classList.add("active");
+
+  // Trigger Scooter Animation on Page 4
+  if (num === 4) {
+    document.getElementById("activa").classList.add("drive-active");
+  } else {
+    document.getElementById("activa").classList.remove("drive-active");
+  }
+
+  if (!musicStarted) {
+    music.volume = 0.3;
+    music.play();
+    musicStarted = true;
+  }
+    }
+
+    // UPDATED TYPING EFFECT
+    const text = `Dear Siddhant,
+
+    We spend so much time laughing and talking about nothing, that I rarely tell you how much I appreciate you.
+
+    From stressful exam nights to celebrating the small wins, you've been the most consistent "constant" in my life's code. 
+
+    You're not just my best friend; you're the brother I was lucky enough to find. I'm proud of the man you're becoming.
+
+    Happy Birthday, Legend. Keep shining. ❤️`;
+
+    let i = 0;
+    function startTyping() {
+      if (i < text.length) {
+        document.getElementById("letter").textContent += text.charAt(i);
+        i++;
+        setTimeout(startTyping, 50);
+      } else {
+        document.getElementById("finalBtn").style.display = "block";
+      }
+    }
+
+    // BETTER CONFETTI (Refined)
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    function startConfetti() {
+      for (let i = 0; i < 150; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          size: Math.random() * 7 + 3,
+          speed: Math.random() * 3 + 2,
+          color: `hsl(${Math.random() * 360}, 80%, 60%)`
+        });
+      }
+      requestAnimationFrame(updateConfetti);
+    }
+
+    function updateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y += p.speed;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+      });
+      requestAnimationFrame(updateConfetti);
+    }
+  </script>
+</body>
+</html>
